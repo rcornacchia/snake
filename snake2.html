@@ -90,7 +90,7 @@
 		}
 
 		//Game objects
-		var canvas, ctx, keystate, frames; 
+		var canvas, ctx, keystate, frames, score; 
 
 		function main() {
 			canvas = document.createElement("canvas");
@@ -98,6 +98,8 @@
 			canvas.height = ROWS*20;
 			ctx = canvas.getContext("2d");
 			document.body.appendChild(canvas);
+
+			ctx.font = "16px Helvetica";
 
 			frames = 0;
 			keystate = {};
@@ -114,6 +116,7 @@
 		}
 
 		function init() {
+			score = 0;
 			grid.init(EMPTY, COLS, ROWS);
 
 			var sp = {x:Math.floor(COLS/2), y:ROWS-1};
@@ -166,6 +169,7 @@
 
 				if (grid.get(nx, ny) === FRUIT) {
 					var tail = {x:nx, y: ny};
+					score++;
 					setFood();
 				} else {
 					var tail = snake.remove();
@@ -201,6 +205,8 @@
 					ctx.fillRect(x*tw, y*th, tw, th);
 				}
 			}
+			ctx.fillStyle = "#000";
+			ctx.fillText("Score: " + score, 10, canvas.height-10);
 		}
 
 		main();
